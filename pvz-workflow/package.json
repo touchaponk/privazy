@@ -5,7 +5,8 @@
   "main": "App.js",
   "scripts": {
     "test": "App.spec.js",
-    "build": "./node_modules/typescript/bin/tsc"
+    "build": "./node_modules/typescript/bin/tsc",
+    "run": "node ./src/App.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,13 @@
   "dependencies": {
     "@overnightjs/core": "^1.6.15",
     "@overnightjs/logger": "^1.1.10",
+    "@types/body-parser": "^1.19.0",
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "http-status-code": "^2.1.0"
+    "http-status-code": "^2.1.0",
+    "mariadb": "^2.3.1",
+    "stack-trace": "0.0.10",
+    "winston": "^3.2.1",
+    "winston-daily-rotate-file": "^4.4.2"
   }
 }

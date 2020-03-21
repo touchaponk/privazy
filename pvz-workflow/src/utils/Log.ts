@@ -4,7 +4,7 @@ const util = require('util');
 const path = require('path');
 
 const transports = [];
-const tag = "[" + process.env.nuser + "-api]";
+const tag = "[" + process.env.SERVICE_NAME + "]";
 
 //expose log to transport by process.env.LOG_DESTINATION
 if(process.env.LOG_DESTINATION ) {
@@ -17,57 +17,6 @@ if(process.env.LOG_DESTINATION ) {
         
         console.log("using rapid7 insightops");
         transports.push(InsightOpsTransport);
-    }
-    else if(process.env.LOG_DESTINATION == "loggly"){
-        require('winston-loggly-bulk');
-        const logglyTransport = new winston.transports.Loggly({
-            inputToken: "e6e8fb28-2c2c-4459-9b8a-932ecac8e33a",
-            subdomain: "convo01",
-            tags: [process.env.nuser, "api"],
-            level: process.env.log,
-            json:true
-        });
-    
-        console.log("using loggly log");
-        transports.push(logglyTransport);
-    }
-    else if(process.env.LOG_DESTINATION == "papertrail"){
-        require('winston-papertrail').Papertrail;
-        const papertrailTransport = new winston.transports.Papertrail({
-            host: 'logs3.papertrailapp.com',
-            port: 39255,
-            handleExceptions: false,
-            humanReadableUnhandledException: false,
-            program: process.env.nuser+"-API",
-            level: process.env.log,
-            colorize: false
-        });
-    
-        console.log("using papertrail log");
-        transports.push(papertrailTransport);
-    }
-    else if(process.env.LOG_DESTINATION == "logentries"){
-        require('le_node');
-        const logEntryTransport = new winston.transports.Logentries({
-            withHostname:process.env.nuser+"-API",
-            token:"b002d83a-bc84-4cd3-adf1-bf48c96a1b42"
-        });
-    
-        transports.push(logEntryTransport);
-        console.log("using logentries log");
-    }
-    else if(process.env.LOG_DESTINATION && process.env.LOG_DESTINATION.indexOf(":")>0){
-        require('winston-logstash');
-        const elkr = process.env.LOG_DESTINATION.split(":");
-        const logstashTransport = new winston.transports.Logstash({
-            level: process.env.log,
-            node_name:  process.env.nuser+"-API",
-            host: elkr[0],
-            port: Number(elkr[1])
-        });
-    
-        console.log("logging to "+elkr[0]+":"+Number(elkr[1]));
-        transports.push(logstashTransport)
     }
     else if(process.env.LOG_DESTINATION == "file") {
         require('winston-daily-rotate-file');
@@ -94,23 +43,33 @@ if(process.env.LOG_DESTINATION ) {
 
 
 //expose console log by default
-const consoleTransport = new (winston.transports.Console)({
-    handleExceptions: false,
-    humanReadableUnhandledException: false,
-    level: process.env.log,
-    timestamp:  ()=> {
-        const now = new Date();
-        return now.toLocaleString()+"-"+now.getMilliseconds();
-    },
-    formatter:  (options : any) => {
-        return options.timestamp() + ' ' + options.level.toUpperCase() + ' ' + (undefined !== options.message ? options.message : '') +
-            (options.meta && Object.keys(options.meta).length ? '\n\t' + JSON.stringify(options.meta) : '' );
-    }
-});
-console.log("using console log");
-transports.push(consoleTransport);
+// const consoleTransport = new ()({
+//     handleExceptions: false,
+//     humanReadableUnhandledException: true,
+//     level: process.env.log,
+//     timestamp:  ()=> {
+//         const now = new Date();
+//         return now.toLocaleString()+"-"+now.getMilliseconds();
+//     },
+// });
+// console.log("using console log");
+transports.push(new winston.transports.Console());
+//
 
-const logger = new winston.Logger({transports: transports});
+const { splat, combine, timestamp, printf } = winston.format;
+// @ts-ignore
+const myFormat = printf(({ timestamp, level, message, meta }) => {
+    return `${timestamp}: ${level}: ${message};${meta? JSON.stringify(meta) : ''}`;
+});
+const logger = new winston.createLogger({
+    format: combine(
+        timestamp(),
+        splat(),
+        myFormat
+    ),
+    level: process.env.log,
+    transports: transports
+});
 export class Log{
     public static handleRejection(){
         process.on('unhandledRejection', (error: any, p) => {

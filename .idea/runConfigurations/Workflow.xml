@@ -1,0 +1,23 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Workflow" type="NodeJSConfigurationType" path-to-js-file="pvz-workflow/src/App.js" working-dir="$PROJECT_DIR$">
+    <envs>
+      <env name="log" value="debug" />
+      <env name="SERVICE_NAME" value="workflow-api" />
+      <env name="DB_HOST" value="localhost" />
+      <env name="DB_USER" value="admin" />
+      <env name="DB_PASSWORD" value="password" />
+      <env name="DB_DATABASE" value="privazy" />
+    </envs>
+    <method v="2">
+      <option name="NpmBeforeRunTask" enabled="true">
+        <package-json value="$PROJECT_DIR$/pvz-workflow/package.json" />
+        <command value="run" />
+        <scripts>
+          <script value="build" />
+        </scripts>
+        <node-interpreter value="project" />
+        <envs />
+      </option>
+    </method>
+  </configuration>
+</component>
