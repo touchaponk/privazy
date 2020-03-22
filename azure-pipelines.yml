@@ -16,7 +16,8 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    docker login -u=$(docker_login) -p=$(docker_password)
     cd pvz-workflow
-    docker build -t pvz/backend-workflow:latest .
-    docker push pvz/backend-workflow:latest
+    docker build -t smartcontractthailand/backend-workflow:latest .
+    docker push smartcontractthailand/backend-workflow:latest
   displayName: 'npm install and build'
