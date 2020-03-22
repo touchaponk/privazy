@@ -1,4 +1,4 @@
-import {AbstractModel, AbstractModelJson} from "../core/AbstractModel";
+import {AbstractModel, AbstractModelJson} from "../../core/AbstractModel";
 
 export interface WorkflowModelJson extends AbstractModelJson{
     title: string,

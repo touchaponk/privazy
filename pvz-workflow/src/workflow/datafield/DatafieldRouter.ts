@@ -1,7 +1,7 @@
-import {AbstractRouter, HttpRequestMethod} from "../core/AbstractRouter";
-import {WorkflowManager} from "./WorkflowManager";
-import {ErrorObject} from "../utils/ErrorObject";
 import express, {Request} from "express";
+import {AbstractRouter, HttpRequestMethod} from "../../core/AbstractRouter";
+import {ErrorObject} from "../../utils/ErrorObject";
+import {WorkflowManager} from "../WorkflowManager";
 export class DatafieldRouter extends AbstractRouter{
     async onGet(query: any): Promise<any> {
         const business_id = Number(query.industry);
