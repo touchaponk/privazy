@@ -17,6 +17,5 @@ steps:
 
 - script: |
     cd pvz-workflow
-    npm install
-    npm run build
+    docker build -t pvz/backend-workflow:latest .
   displayName: 'npm install and build'

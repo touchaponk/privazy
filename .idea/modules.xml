@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/privazy.iml" filepath="$PROJECT_DIR$/.idea/privazy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pvz-workflow/pvz-workflow.iml" filepath="$PROJECT_DIR$/pvz-workflow/pvz-workflow.iml" />
     </modules>
   </component>
 </project>
