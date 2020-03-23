@@ -24,5 +24,9 @@ steps:
     docker login -u=$(docker_login) -p=$(docker_password)
     cd pvz-workflow
     docker build -t smartcontractthailand/pvz-backend-workflow:latest .
+  displayName: 'build docker'
+
+- script: |
     docker push smartcontractthailand/pvz-backend-workflow:latest
-  displayName: 'npm install and build'
+  displayName: 'push docker image'
+
