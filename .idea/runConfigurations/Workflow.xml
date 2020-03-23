@@ -3,9 +3,9 @@
     <envs>
       <env name="log" value="debug" />
       <env name="SERVICE_NAME" value="workflow-api" />
-      <env name="DB_HOST" value="localhost" />
-      <env name="DB_USER" value="admin" />
-      <env name="DB_PASSWORD" value="password" />
+      <env name="DB_HOST" value="privazy-db.mariadb.database.azure.com" />
+      <env name="DB_USER" value="pvzadmin@privazy-db" />
+      <env name="DB_PASSWORD" value="1qazZAQ!" />
       <env name="DB_DATABASE" value="privazy" />
     </envs>
     <method v="2">
