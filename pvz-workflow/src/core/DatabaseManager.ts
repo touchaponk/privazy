@@ -21,7 +21,7 @@ export class DatabaseManager {
     private pool: Pool;
 
     private constructor() {
-        this.pool = mariadb.createPool({
+        const config = {
             host: process.env.DB_HOST,
             user: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
@@ -30,7 +30,9 @@ export class DatabaseManager {
                 rejectUnauthorized: false
             },
             connectionLimit: Number(process.env.DB_CONNECTION_LIMIT) || 10
-        });
+        };
+        Log.debug("Creating database pool with config: ", config);
+        this.pool = mariadb.createPool(config);
     }
 
     public async query(query: string) : Promise<InsertResponseJson | any[]> {
