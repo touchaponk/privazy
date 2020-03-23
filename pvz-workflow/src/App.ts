@@ -1,4 +1,4 @@
-import express from "express";
+import express, {Request, Response} from "express";
 import {Log} from "./utils/Log";
 import {BusinessRouter} from "./business/BusinessRouter";
 import bodyParser from "body-parser";
@@ -17,6 +17,7 @@ export class App{
         this.bindRouters();
     }
     private static bindRouters(){
+        this.app.get('/', (req: Request, res: Response) =>{ res.json({"it":"works"})});
         this.app.use('/businesses', new BusinessRouter().init());
         this.app.use('/dst', new DSTRouter().init());
         this.app.use('/workflows', new WorkflowRouter().init());
